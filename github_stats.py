@@ -289,6 +289,10 @@ Languages:
             )
             raw_results = raw_results if raw_results is not None else {}
 
+            if "errors" in raw_results or "message" in raw_results:
+                error_msg = raw_results.get("message", raw_results.get("errors"))
+                raise Exception(f"GitHub API Authentication Failed! Check if your ACCESS_TOKEN is expired. API Response: {error_msg}")
+
             self._name = (raw_results
                           .get("data", {})
                           .get("viewer", {})
