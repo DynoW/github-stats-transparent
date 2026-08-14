@@ -253,6 +253,7 @@ pub fn main(init: std.process.Init) !void {
         languages_total: usize = 0,
         stars: usize = 0,
         forks: usize = 0,
+        prs_merged: usize = 0,
         lines_changed: usize = 0,
         views: usize = 0,
         repos: usize = 0,
@@ -262,6 +263,7 @@ pub fn main(init: std.process.Init) !void {
             stats.commit_contributions +
             stats.pr_contributions +
             stats.review_contributions,
+        .prs_merged = stats.prs_merged,
         .languages = try .init(allocator, &.{}, &.{}),
         .language_colors = try .init(allocator, &.{}, &.{}),
         .name = stats.name,

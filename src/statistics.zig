@@ -10,6 +10,7 @@ repo_contributions: u32 = 0,
 issue_contributions: u32 = 0,
 commit_contributions: u32 = 0,
 pr_contributions: u32 = 0,
+prs_merged: u32 = 0,
 review_contributions: u32 = 0,
 
 const Statistics = @This();
@@ -521,6 +522,8 @@ fn getRepos(
         }
     }
 
+    result.prs_merged = try getPrsMerged(client, arena, info.user);
+
     for (info.years) |year| {
         try getReposByYear(.{
             .allocator = allocator,
@@ -550,6 +553,37 @@ fn getRepos(
     }.lessThanFn);
 
     return result;
+}
+
+fn getPrsMerged(client: *HttpClient, arena: *std.heap.ArenaAllocator, user: []const u8) !u32 {
+    std.log.info("Getting merged PR count for {s}...", .{user});
+    const response = try client.graphql(
+        \\query ($query: String!) {
+        \\  search(query: $query, type: ISSUE, first: 1) {
+        \\    issueCount
+        \\  }
+        \\}
+    ,
+        .{
+            .query = try std.fmt.allocPrint(
+                arena.allocator(),
+                "author:{s} is:pr is:merged",
+                .{user},
+            ),
+        },
+    );
+    defer client.allocator.free(response.body);
+    if (response.status != .ok) {
+        std.log.err("Failed to get merged PR count ({?s})", .{response.status.phrase()});
+        return error.RequestFailed;
+    }
+    const parsed = try std.json.parseFromSliceLeaky(
+        struct { data: struct { search: struct { issueCount: u32 } } },
+        arena.allocator(),
+        response.body,
+        .{ .ignore_unknown_fields = true },
+    );
+    return parsed.data.search.issueCount;
 }
 
 fn getLinesChanged(
