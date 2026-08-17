@@ -138,3 +138,8 @@ dmypy.json
 # Zig files
 .zig-cache
 zig-out
+
+# Output files
+languages.svg
+overview.svg
+stats.json
