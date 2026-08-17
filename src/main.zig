@@ -49,7 +49,6 @@ const Args = struct {
     languages_output_file: ?[]const u8 = null,
     overview_template: ?[]const u8 = null,
     languages_template: ?[]const u8 = null,
-    max_retries: ?usize = 25,
     version: bool = false,
     dump_overview_template: ?[]const u8 = null,
     dump_languages_template: ?[]const u8 = null,
@@ -225,8 +224,6 @@ pub fn main(init: std.process.Init) !void {
         break :stats try Statistics.init(
             &client,
             allocator,
-            io,
-            args.max_retries,
         );
     } else unreachable;
     defer stats.deinit(allocator);
@@ -254,7 +251,6 @@ pub fn main(init: std.process.Init) !void {
         stars: usize = 0,
         forks: usize = 0,
         prs_merged: usize = 0,
-        lines_changed: usize = 0,
         views: usize = 0,
         repos: usize = 0,
     } = .{
@@ -278,9 +274,10 @@ pub fn main(init: std.process.Init) !void {
         }
         aggregate_stats.stars += repository.stars;
         aggregate_stats.forks += repository.forks;
-        aggregate_stats.lines_changed += repository.lines_changed;
         aggregate_stats.views += repository.views;
-        aggregate_stats.repos += 1;
+        if (repository.is_fork) {
+            continue;
+        }
         if (repository.languages) |langs| for (langs) |language| {
             if (glob.matchAny(exclude_langs orelse &.{}, language.name)) {
                 continue;
@@ -297,6 +294,14 @@ pub fn main(init: std.process.Init) !void {
             try aggregate_stats.languages.put(allocator, language.name, total);
             aggregate_stats.languages_total += language.size;
         };
+    }
+    for (stats.contributed_repos) |repository| {
+        if (glob.matchAny(exclude_repos orelse &.{}, repository.name) or
+            (args.exclude_private and repository.private))
+        {
+            continue;
+        }
+        aggregate_stats.repos += 1;
     }
     aggregate_stats.languages.sort(struct {
         values: @TypeOf(aggregate_stats.languages.values()),
