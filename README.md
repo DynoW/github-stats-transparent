@@ -1,78 +1,85 @@
-# github-stats
 
-Generate GitHub statistics SVGs for your profile README — transparent background,
-no light/dark mode hacks needed.
+# github-stats-transparent
+
+Generate clean, transparent GitHub statistics cards for your profile README.
 
 <div align="center">
-  <img src="https://github.com/dynow/github-stats-transparent/blob/generated/overview.svg" />
-  <img src="https://github.com/dynow/github-stats-transparent/blob/generated/languages.svg" />
+  <img src="https://raw.githubusercontent.com/dynow/github-stats-transparent/generated/overview.svg" alt="Overview Stats" width="48%" />
+  <img src="https://raw.githubusercontent.com/dynow/github-stats-transparent/generated/languages.svg" alt="Top Languages" width="48%" />
 </div>
+
+---
 
 ## Quick Start
 
-1. **Use this template** — [click here](https://github.com/jstrieb/github-stats/generate) to create your own copy.
+1. **Create your repository:** [Use this template](https://github.com/dynow/github-stats-transparent/generate) to make your own copy.
+2. **Generate a token:** Create a [Personal Access Token (classic)](https://github.com/settings/tokens) with `read:user` and `repo` scopes.
+3. **Save secret:** Navigate to **Settings → Secrets and variables → Actions → New repository secret**, name it `ACCESS_TOKEN`, and paste your token value.
+4. **Trigger generation:** Go to **Actions → Generate Stats Images → Run workflow** (runs automatically daily afterward).
+5. **Embed in your README:** Add the following Markdown snippet (replace `[USERNAME]` with your GitHub username):
 
-2. **Create a personal access token (classic)** with `read:user` and `repo` scopes:
-   [github.com/settings/tokens](https://github.com/settings/tokens)
+<p align="center">
+  <img src="[https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)[USERNAME]/github-stats-transparent/generated/overview.svg" alt="GitHub Overview Stats" />
+  <img src="[https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)[USERNAME]/github-stats-transparent/generated/languages.svg" alt="Top Languages" />
+</p>
 
-3. **Add the token** as a repository secret named `ACCESS_TOKEN`:
-   `Settings → Secrets and variables → Actions → New repository secret`
 
-4. **Run the workflow** — go to `Actions → Generate Stats Images → Run workflow`
+---
 
-5. **Embed in your profile README** (replace `[USERNAME]`):
-   ```markdown
-   ![](https://github.com/[USERNAME]/github-stats/blob/generated/overview.svg)
-   ![](https://github.com/[USERNAME]/github-stats/blob/generated/languages.svg)
-   ```
+## Metrics Breakdown
 
-   Images auto-refresh daily via GitHub Actions.
+### Overview Card
 
-## What the SVGs Show
+| Metric | Source |
+| --- | --- |
+| **Stars** | Total stars across all owned repositories |
+| **Forks** | Total forks across all owned repositories |
+| **PRs Merged** | Pull requests authored by you that have been merged |
+| **All-Time Contributions** | Combined total of commits, issues, PRs, and code reviews |
+| **Repository Views** | Aggregate visitor views on your repositories over the past 14 days |
+| **Active Repositories** | Distinct repositories you have contributed to (including third-party repos) |
 
-### Overview card
-| Field | Description |
-|-------|-------------|
-| **Stars** | Total stars across all repos you own |
-| **Forks** | Total forks across all repos you own |
-| **PRs merged** | Total number of pull requests you authored that have been merged |
-| **All-time contributions** | Sum of commits, issues, PRs, and reviews across your account history |
-| **Repository views** | Total views on your repos over the past two weeks |
-| **Repositories with contributions** | Number of distinct repositories you've contributed to (including repos you don't own) |
+### Languages Card
 
-### Languages card
-Shows language breakdown by file size across your owned repositories. Forks are excluded.
+Visualizes language distribution by file size across all owned public repositories (forks are automatically excluded).
 
-## Optional Configuration
+---
 
-Set these as repository secrets or variables:
+## Configuration
 
-| Secret/Variable | Purpose |
-|-----------------|---------|
-| `EXCLUDE_REPOS` | Comma-separated repos to exclude. Supports globs (e.g. `user/*`). Add your stats repo to hide it from results. |
-| `EXCLUDE_LANGS` | Comma-separated languages to exclude (case-insensitive, e.g. `CSS, HTML`). |
-| `EXCLUDE_PRIVATE` | Set to `true` to omit private repos from results. |
-| `SILENT` | Set to `true` to suppress non-error log output. |
+Customize generation behavior by adding optional **Repository Secrets** or **Variables** in your repository settings:
 
-## Local Use
+| Variable | Description | Example |
+| --- | --- | --- |
+| `EXCLUDE_REPOS` | Comma-separated list/globs of repositories to ignore | `user/stats, user/*-archive` |
+| `EXCLUDE_LANGS` | Comma-separated list of languages to exclude (case-insensitive) | `HTML, CSS, SCSS` |
+| `EXCLUDE_PRIVATE` | Omit private repository activity from data aggregation | `false` |
+| `SILENT` | Suppress standard informational log output | `true` |
 
-Download the binary from [releases](https://github.com/jstrieb/github-stats/releases/latest):
+---
+
+## CLI & Local Usage
+
+Pre-compiled standalone binaries are available on the [Releases page](https://github.com/dynow/github-stats-transparent/releases/latest).
 
 ```bash
-# Linux
-sudo curl -Lo /usr/local/bin/github-stats \
-  'https://github.com/jstrieb/github-stats/releases/latest/download/github-stats_x86_64-linux'
+# Install binary (Linux x86_64)
+sudo curl -Lo /usr/local/bin/github-stats https://github.com/dynow/github-stats-transparent/releases/latest/download/github-stats_x86_64-linux'
 sudo chmod +x /usr/local/bin/github-stats
 
 # Generate SVGs
-github-stats --access-token YOUR_TOKEN
+github-stats --access-token YOUR_ACCESS_TOKEN
 
-# Dump raw JSON for analysis
-github-stats --access-token YOUR_TOKEN --json-output-file stats.json
+# Or generate SVGs and also export raw JSON data
+github-stats --access-token YOUR_ACCESS_TOKEN --json-output-file stats.json
+
 ```
 
-Run `github-stats --help` for all options, including custom templates and output paths.
+Run `github-stats --help` to inspect additional flags, custom SVG templates, and custom file output paths.
 
-## License & Attribution
+---
 
-This project is a fork of [jstrieb/github-stats](https://github.com/jstrieb/github-stats) by [Jacob Strieb](https://jstrieb.github.io). Licensed under [GNU GPL v3](LICENSE).
+## License & Credits
+
+* Forked from [jstrieb/github-stats](https://github.com/jstrieb/github-stats) by [Jacob Strieb](https://jstrieb.github.io).
+* Distributed under the [GNU GPL v3 License](https://www.google.com/search?q=LICENSE).
