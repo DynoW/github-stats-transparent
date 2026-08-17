@@ -65,7 +65,7 @@ Pre-compiled standalone binaries are available on the [Releases page](https://gi
 
 ```bash
 # Install binary (Linux x86_64)
-sudo curl -Lo /usr/local/bin/github-stats https://github.com/dynow/github-stats-transparent/releases/latest/download/github-stats_x86_64-linux'
+sudo curl -Lo /usr/local/bin/github-stats 'https://github.com/dynow/github-stats-transparent/releases/latest/download/github-stats_x86_64-linux'
 sudo chmod +x /usr/local/bin/github-stats
 
 # Generate SVGs
