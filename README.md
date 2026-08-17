@@ -18,11 +18,12 @@ Generate clean, transparent GitHub statistics cards for your profile README.
 4. **Trigger generation:** Go to **Actions → Generate Stats Images → Run workflow** (runs automatically daily afterward).
 5. **Embed in your README:** Add the following Markdown snippet (replace `[USERNAME]` with your GitHub username):
 
+```markdown
 <p align="center">
-  <img src="[https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)[USERNAME]/github-stats-transparent/generated/overview.svg" alt="GitHub Overview Stats" />
-  <img src="[https://raw.githubusercontent.com/](https://raw.githubusercontent.com/)[USERNAME]/github-stats-transparent/generated/languages.svg" alt="Top Languages" />
+  <img src="https://raw.githubusercontent.com/[USERNAME]/github-stats-transparent/generated/overview.svg" alt="GitHub Overview Stats" />
+  <img src="https://raw.githubusercontent.com/[USERNAME]/github-stats-transparent/generated/languages.svg" alt="Top Languages" />
 </p>
-
+```
 
 ---
 

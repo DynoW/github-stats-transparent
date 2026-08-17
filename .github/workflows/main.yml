@@ -54,7 +54,7 @@ jobs:
 
     - name: Commit to the repo
       run: |
-        git rm -rf .
+        git rm -rf . --cached
         git add overview.svg languages.svg
         # Force the build to succeed, even if no files were changed
         git commit -m 'Update generated files' || true
