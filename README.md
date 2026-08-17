@@ -4,8 +4,8 @@ Generate GitHub statistics SVGs for your profile README — transparent backgrou
 no light/dark mode hacks needed.
 
 <div align="center">
-  <img src="https://github.com/jstrieb/github-stats/blob/generated/overview.svg" />
-  <img src="https://github.com/jstrieb/github-stats/blob/generated/languages.svg" />
+  <img src="https://github.com/dynow/github-stats-transparent/blob/generated/overview.svg" />
+  <img src="https://github.com/dynow/github-stats-transparent/blob/generated/languages.svg" />
 </div>
 
 ## Quick Start
