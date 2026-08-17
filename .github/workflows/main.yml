@@ -51,13 +51,11 @@ jobs:
         EXCLUDE_LANGS: ${{ secrets.EXCLUDE_LANGS || vars.EXCLUDE_LANGS }}
         EXCLUDE_PRIVATE: ${{ secrets.EXCLUDE_PRIVATE || vars.EXCLUDE_PRIVATE || 'false' }}
         SILENT: ${{ secrets.SILENT || vars.SILENT || 'true' }}
-        # TODO: Remove this when they get their API working again
-        # https://github.com/orgs/community/discussions/192970
-        MAX_RETRIES: 5
 
     - name: Commit to the repo
       run: |
-        git add .
+        git rm -rf .
+        git add overview.svg languages.svg
         # Force the build to succeed, even if no files were changed
         git commit -m 'Update generated files' || true
         git push --set-upstream origin generated
