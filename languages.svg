@@ -125,7 +125,7 @@ div.ellipsis {
   background-color: #427819; 
   width: 4.948%;
 " class="progress-item"></span><span style="
-  background-color: #178600; 
+  background-color: #7355dd; 
   width: 4.651%;
 " class="progress-item"></span><span style="
   background-color: #f1e05a; 
@@ -301,7 +301,7 @@ div.ellipsis {
   <svg 
       xmlns="http://www.w3.org/2000/svg" 
       class="octicon"
-      style="fill: #178600;" 
+      style="fill: #7355dd;" 
       viewBox="0 0 16 16" 
       version="1.1" 
       width="16" 
